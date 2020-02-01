@@ -1,0 +1,19 @@
+.sign-up {
+  padding: 2rem;
+  margin: 1rem;
+  border: 1px solid #112d4e;
+  border-radius: 6px;
+  max-width: 400px;
+  .input,
+  .select {
+    margin-bottom: 1rem;
+  }
+  .select {
+    width: 100%;
+  }
+  h2,
+  p {
+    text-align: center;
+    color: #112d4e;
+  }
+}

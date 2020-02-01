@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import isEmpty from "lodash/isEmpty";
+import Authen from "./components/Authen";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const mapStateToProps = ({ authen }) => {
+  return { currentUser: authen.user };
+};
 
-export default App;
+const App = ({ currentUser }) => {
+  console.log(currentUser);
+  if (isEmpty(currentUser)) return <Authen />;
+  return <p>currentUser: {currentUser.uid}</p>;
+};
+
+export default connect(mapStateToProps, null)(App);

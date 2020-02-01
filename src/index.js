@@ -1,12 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import pick from "lodash/pick";
+import "firebase/auth";
+import "firebase/database";
+import "antd/dist/antd.css";
+import firebase from "./firebase";
+import configurationStore from "./store/configurationStore";
+import { setUsers, setAppointments } from "./actions/firebase";
+import { setLogInUser, setLogInUID, logout } from "./actions/authen";
+import App from "./App";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = configurationStore();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const { dispatch } = store;
+
+/**
+ * Watch users change then sync users
+ */
+firebase
+  .database()
+  .ref("users")
+  .on("value", snap => snap.val && dispatch(setUsers(snap.val())));
+
+/**
+ * Watch appointments change then sync appointments
+ */
+firebase
+  .database()
+  .ref("appointments")
+  .on("value", snap => snap.val && dispatch(setAppointments(snap.val())));
+
+/**
+ * Watch login success then sync user infomation
+ */
+firebase.auth().onAuthStateChanged(data => {
+  if (data) {
+    dispatch(setLogInUID(pick(data, "uid")));
+    firebase
+      .database()
+      .ref("users/" + data.uid)
+      .once("value")
+      .then(snap => snap.val && dispatch(setLogInUser(snap.val())));
+  } else dispatch(logout());
+});
+
+ReactDOM.render(
+  <Provider store={store} key="provider">
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);

@@ -25,7 +25,7 @@ const SignUp = ({ onSignIn, onSignUp }) => {
 
   return (
     <div className="sign-up">
-      <h2> DOCTOR SCHEDULER</h2>
+      <h2>DOCTOR SCHEDULER</h2>
       <Input
         className="input"
         id="username"

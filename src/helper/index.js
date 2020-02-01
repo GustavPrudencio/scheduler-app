@@ -1,6 +1,8 @@
+/* eslint-disable no-bitwise */
 import React from "react";
 import _ from "lodash";
 import { notification, Icon } from "antd";
+
 const { isEmpty, get } = _;
 
 export const localStorage = () => {
@@ -29,22 +31,22 @@ export const localStorage = () => {
 export const noti = {
   success: ({ message = "Success", description = "" }) => {
     notification.error({
-      message: message,
-      description: description,
+      message,
+      description,
       icon: <Icon type="check-circle" style={{ color: "green" }} />
     });
   },
   warning: ({ message = "Warning", description = "" }) => {
     notification.warning({
-      message: message,
-      description: description,
+      message,
+      description,
       icon: <Icon type="warning" style={{ color: "yellow" }} />
     });
   },
   error: ({ message = "Error", description = "" }) => {
     notification.error({
-      message: message,
-      description: description,
+      message,
+      description,
       icon: <Icon type="stop" style={{ color: "red" }} />
     });
   }

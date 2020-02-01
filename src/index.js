@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(data => {
     dispatch(setLogInUID(pick(data, "uid")));
     firebase
       .database()
-      .ref("users/" + data.uid)
+      .ref(`users/${data.uid}`)
       .once("value")
       .then(snap => snap.val && dispatch(setLogInUser(snap.val())));
   } else dispatch(logout());

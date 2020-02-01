@@ -19,7 +19,7 @@ const SignIn = ({ onSignIn, onSignUp }) => {
 
   return (
     <div className="sign-in">
-      <h2> DOCTOR SCHEDULER</h2>
+      <h2>DOCTOR SCHEDULER</h2>
       <Input
         id="email"
         placeholder="Email"
@@ -48,7 +48,7 @@ const SignIn = ({ onSignIn, onSignUp }) => {
       </Row>
       <Divider />
       <p>
-        Don't have an account?
+        Don&apos;t have an account?
         <Button type="link" block onClick={onSignUp}>
           Sign up
         </Button>

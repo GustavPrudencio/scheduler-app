@@ -1,0 +1,16 @@
+{
+  "extends": ["airbnb", "airbnb/hooks"],
+  "globals": {
+    "fetch": true,
+    "window": true,
+    "document": true,
+    "it": true
+  },
+  "plugins": ["react"],
+  "rules": {
+    "arrow-body-style": "off",
+    "quotes": ["error", "double"],
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off"
+  }
+}

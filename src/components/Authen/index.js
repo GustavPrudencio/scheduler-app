@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import omit from "lodash/omit";
 import firebase from "../../firebase";
 import { noti } from "../../helper";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 
-const Authen = ({ actions }) => {
+const Authen = () => {
   const [view, setView] = useState("signin");
 
   /**
@@ -17,7 +16,7 @@ const Authen = ({ actions }) => {
     const { uid } = firebase.auth().currentUser;
     firebase
       .database()
-      .ref("users/" + uid)
+      .ref(`users/${uid}`)
       .set({ ...userinfo, uid });
   };
 
@@ -48,7 +47,7 @@ const Authen = ({ actions }) => {
         const { uid } = firebase.auth().currentUser;
         firebase
           .database()
-          .ref("users/" + uid)
+          .ref(`users/${uid}`)
           .set(omit(data, "password"), err => {
             if (err) {
               const { message } = err;
@@ -62,19 +61,14 @@ const Authen = ({ actions }) => {
       });
   };
 
-  if (view === "signin")
+  if (view === "signin") {
     return (
       <SignIn onSignIn={handleOnSignIn} onSignUp={() => setView("signup")} />
     );
+  }
   return (
     <SignUp onSignIn={() => setView("signin")} onSignUp={handleOnSignUp} />
   );
-};
-
-Authen.propTypes = {
-  actions: PropTypes.shape({
-    setLogInUser: PropTypes.func.isRequired
-  })
 };
 
 export default Authen;

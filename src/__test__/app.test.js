@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 import React from "react";
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 import { cleanup, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import reducers from '../reducers';
+import reducers from "../reducers";
 import App from "../App";
 
 afterEach(cleanup);
@@ -14,8 +15,8 @@ function renderWithRedux(
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
-    store,
-  }
+    store
+  };
 }
 
 it("render without crashing", () => {

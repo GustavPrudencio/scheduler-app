@@ -9,9 +9,12 @@ const mapStateToProps = ({ authen }) => {
 };
 
 const App = ({ currentUser }) => {
-  console.log(currentUser);
   if (isEmpty(currentUser)) return <Authen />;
   return <p>currentUser: {currentUser.uid}</p>;
+};
+
+App.propTypes = {
+  currentUser: PropTypes.shape().isRequired
 };
 
 export default connect(mapStateToProps, null)(App);

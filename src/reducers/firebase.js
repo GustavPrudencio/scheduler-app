@@ -1,4 +1,5 @@
 import { SET_USERS, SET_APPOINTMENT } from "../actions/firebase";
+
 const initialState = {
   firebase: {},
   users: [],

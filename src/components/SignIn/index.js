@@ -19,20 +19,20 @@ const SignIn = ({ onSignIn, onSignUp }) => {
 
   return (
     <div className="sign-in">
-      <h2>DOCTOR SCHEDULER</h2>
+      <h1>DOCTOR SCHEDULER</h1>
       <Input
         id="email"
         placeholder="Email"
         className="input"
         value={state.email}
-        onChange={e => onChange("email", e.target.value)}
+        onChange={(e) => onChange("email", e.target.value)}
       />
       <Input.Password
         id="password"
         placeholder="Password"
         className="input"
         value={state.password}
-        onChange={e => onChange("password", e.target.value)}
+        onChange={(e) => onChange("password", e.target.value)}
       />
       <Row>
         <Col span={12}>

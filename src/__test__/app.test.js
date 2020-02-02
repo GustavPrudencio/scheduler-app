@@ -21,5 +21,5 @@ function renderWithRedux(
 
 it("render without crashing", () => {
   const { getByText } = renderWithRedux(<App />);
-  expect(getByText(/doctor scheduler/i)).toBeInTheDocument();
+  expect(getByText(/Loading../i)).toBeInTheDocument();
 });

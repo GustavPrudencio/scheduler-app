@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import isEmpty from "lodash/isEmpty";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Icon, Layout, Menu, Modal } from "antd";
@@ -8,6 +9,7 @@ import { logout } from "../../actions/authen";
 import { noti } from "../../helper";
 import Account from "../Account";
 import Scheduler from "../Scheduler";
+import LoadingPage from "../LoadingPage";
 import "./style.scss";
 import appLogo from "../../static/img/app-logo.png";
 
@@ -118,6 +120,8 @@ const Console = ({ currentUser, userList, appointmentList }) => {
       />
     );
   };
+
+  if (isEmpty(currentUser.uid)) return <LoadingPage />;
 
   return (
     <Layout style={{ height: "100vh" }}>

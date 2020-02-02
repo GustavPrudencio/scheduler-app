@@ -25,46 +25,46 @@ const SignUp = ({ onSignIn, onSignUp }) => {
 
   return (
     <div className="sign-up">
-      <h2>DOCTOR SCHEDULER</h2>
+      <h1>DOCTOR SCHEDULER</h1>
       <Input
         className="input"
         id="username"
         placeholder="Username"
         value={state.username}
-        onChange={e => onChange("username", e.target.value)}
+        onChange={(e) => onChange("username", e.target.value)}
       />
       <Input
         className="input"
         id="email"
         placeholder="Email"
         value={state.email}
-        onChange={e => onChange("email", e.target.value)}
+        onChange={(e) => onChange("email", e.target.value)}
       />
       <Input.Password
         className="input"
         id="password"
         placeholder="Password"
         value={state.password}
-        onChange={e => onChange("password", e.target.value)}
+        onChange={(e) => onChange("password", e.target.value)}
       />
       <Input
         className="input"
         id="firstname"
         placeholder="First name"
         value={state.firstname}
-        onChange={e => onChange("firstname", e.target.value)}
+        onChange={(e) => onChange("firstname", e.target.value)}
       />
       <Input
         className="input"
         id="lastname"
         placeholder="Last name"
         value={state.lastname}
-        onChange={e => onChange("lastname", e.target.value)}
+        onChange={(e) => onChange("lastname", e.target.value)}
       />
       <Select
         className="select"
         defaultValue={state.type}
-        onChange={value => onChange("type", value)}
+        onChange={(value) => onChange("type", value)}
       >
         <Option value="doctor">Doctor</Option>
         <Option value="patient">Patient</Option>

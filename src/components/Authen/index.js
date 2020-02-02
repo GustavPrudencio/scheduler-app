@@ -5,6 +5,7 @@ import { noti } from "../../helper";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import "./style.scss";
+import logo from "../../static/img/medical-logo-2.jpg";
 
 const Authen = () => {
   const [view, setView] = useState("signin");
@@ -75,6 +76,7 @@ const Authen = () => {
 
   return (
     <div className="wrap-authen">
+      <img src={logo} alt="wallpaper doctor appoiment" />
       <div className="authen">{render()}</div>
     </div>
   );

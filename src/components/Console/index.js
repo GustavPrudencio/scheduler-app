@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Icon, Layout, Menu, Modal } from "antd";
 import firebase from "../../firebase";
-import { logout } from "../../actions/authen";
+import { logout, setLogInUser } from "../../actions/authen";
 import { noti } from "../../helper";
 import Account from "../Account";
 import Scheduler from "../Scheduler";
@@ -25,11 +25,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ logout }, dispatch)
+    actions: bindActionCreators({ logout, setLogInUser }, dispatch)
   };
 };
 
-const Console = ({ currentUser, userList, appointmentList }) => {
+const Console = ({ actions, currentUser, userList, appointmentList }) => {
   const [content, setContent] = useState("scheduler");
 
   /**
@@ -40,8 +40,12 @@ const Console = ({ currentUser, userList, appointmentList }) => {
       .auth()
       .signOut()
       .catch((err) => {
-        const { message } = err;
-        noti.error({ description: message });
+        if (err) {
+          const { message } = err;
+          noti.error({ description: message });
+        } else {
+          actions.logout();
+        }
       });
   };
 
@@ -56,7 +60,16 @@ const Console = ({ currentUser, userList, appointmentList }) => {
       .ref(`users/${uid}`)
       .set(data, (err) => {
         if (err) noti.error({ description: err.message });
-        else noti.success({ message: "Saved" });
+        else {
+          noti.success({ message: "User information updated" });
+          firebase
+            .database()
+            .ref("users")
+            .child(uid)
+            .once("value", (snap) => {
+              if (snap) actions.setLogInUser(snap.val());
+            });
+        }
       });
   };
 
@@ -166,7 +179,8 @@ const Console = ({ currentUser, userList, appointmentList }) => {
 
 Console.propTypes = {
   actions: PropTypes.shape({
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    setLogInUser: PropTypes.func.isRequired
   }).isRequired,
   currentUser: PropTypes.shape().isRequired,
   userList: PropTypes.array.isRequired,

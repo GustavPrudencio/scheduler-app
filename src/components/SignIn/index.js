@@ -19,7 +19,6 @@ const SignIn = ({ onSignIn, onSignUp }) => {
 
   return (
     <div className="sign-in">
-      <h1>DOCTOR SCHEDULER</h1>
       <Input
         id="email"
         placeholder="Email"

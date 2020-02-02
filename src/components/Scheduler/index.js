@@ -173,7 +173,10 @@ const Scheduler = ({
           <Popconfirm
             icon={<Icon type="delete" />}
             title="Are you sure delete this appointment?"
-            onConfirm={() => onAppointmentDelete(appointmentDetailView.key)}
+            onConfirm={() => {
+              onAppointmentDelete(appointmentDetailView.key);
+              setAppointmentDetailView(false);
+            }}
             onCancel={null}
             okText="Yes"
             cancelText="No"

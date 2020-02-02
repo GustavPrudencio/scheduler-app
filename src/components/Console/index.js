@@ -11,7 +11,7 @@ import Account from "../Account";
 import Scheduler from "../Scheduler";
 import LoadingPage from "../LoadingPage";
 import "./style.scss";
-import appLogo from "../../static/img/app-logo.png";
+import appLogo from "../../static/img/medical-logo-2.jpg";
 
 const { Header, Content, Sider } = Layout;
 
@@ -138,13 +138,13 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider breakpoint="lg" collapsedWidth="0">
+      <Sider theme="light" breakpoint="lg" collapsedWidth="0">
         <div className="logo">
           <img src={appLogo} alt="app-logo" />
           <p>Doctor Scheduler App</p>
         </div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           defaultSelectedKeys={["2"]}
           onClick={handleOnMenuClick}
@@ -164,8 +164,10 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{ background: "#fff", padding: 0 }}>
-          <h3 style={{ paddingLeft: "2rem" }}>{content.toUpperCase()}</h3>
+        <Header style={{ background: "#1890ff", padding: 0 }}>
+          <h3 style={{ paddingLeft: "2rem", color: "white" }}>
+            {content.toUpperCase()}
+          </h3>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>

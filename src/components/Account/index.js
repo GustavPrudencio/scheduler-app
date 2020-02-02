@@ -25,7 +25,7 @@ const Account = ({ user, onSubmit }) => {
   return (
     <div className="wrap-account">
       <div className="account">
-        <h2>User infomation</h2>
+        <h2>My Infomation</h2>
         <Input
           size="large"
           className="input"

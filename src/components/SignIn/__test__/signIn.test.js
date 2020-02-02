@@ -9,8 +9,14 @@ afterEach(cleanup);
 it("render without crashing", () => {
   const onSignIn = jest.fn();
   const onSignUp = jest.fn();
+  const onResetPassword = jest.fn();
+
   const { getByText, getByPlaceholderText } = render(
-    <SignIn onSignIn={onSignIn} onSignUp={onSignUp} />
+    <SignIn
+      onSignIn={onSignIn}
+      onSignUp={onSignUp}
+      onResetPassword={onResetPassword}
+    />
   );
   const usernameElement = getByPlaceholderText(/email/i);
   const passwordElement = getByPlaceholderText(/password/i);

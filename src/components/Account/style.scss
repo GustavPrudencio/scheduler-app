@@ -1,0 +1,25 @@
+.wrap-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .account {
+    // border: 1px solid whitesmoke;
+    // background: whitesmoke;
+    padding: 2rem 2rem 4rem;
+    margin: 0 1rem;
+    border-radius: 6px;
+    max-width: 400px;
+    .input,
+    .select {
+      margin-bottom: 1rem;
+    }
+    .select {
+      width: 100%;
+    }
+    h2,
+    p {
+      text-align: center;
+      color: #112d4e;
+    }
+  }
+}

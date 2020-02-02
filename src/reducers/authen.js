@@ -1,7 +1,14 @@
 import { SET_LOGIN_USER, SET_LOGIN_UID, LOGOUT } from "../actions/authen";
 
 const initialState = {
-  user: {}
+  user: {
+    uid: "",
+    username: "",
+    email: "",
+    firstname: "",
+    lastname: "",
+    type: ""
+  }
 };
 
 export default (state = initialState, { type, payload }) => {

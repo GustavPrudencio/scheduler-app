@@ -6,11 +6,21 @@
     "document": true,
     "it": true
   },
-  "plugins": ["react"],
   "rules": {
     "arrow-body-style": "off",
     "quotes": ["error", "double"],
     "react/jsx-filename-extension": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "react/forbid-prop-types": "off",
+    "object-curly-newline": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "comma-dangle": [
+      "error",
+      {
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ]
   }
 }

@@ -71,15 +71,15 @@ export const appointmentTimes = [
   "16:30-16:00"
 ];
 
-export const appointmentTimeToString = time => {
+export const appointmentTimeToString = (time) => {
   return appointmentTimes[parseFloat(time)];
 };
 
-export const appointmentsToArray = appointments => {
+export const appointmentsToArray = (appointments) => {
   const array = [];
   _(appointments)
     .keys()
-    .forEach(key => array.push(appointments[key]));
+    .forEach((key) => array.push(appointments[key]));
   return array;
 };
 
@@ -93,5 +93,11 @@ export const generateObjectId = () => {
 export const getNameByUID = (users, uid) => {
   if (isEmpty(uid)) return "";
   const { firstname, lastname } = get(users, uid) || {};
+  return `${firstname} ${lastname}`;
+};
+
+export const getFullName = (user) => {
+  if (isEmpty(user)) return "";
+  const { firstname, lastname } = user;
   return `${firstname} ${lastname}`;
 };

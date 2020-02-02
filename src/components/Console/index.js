@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Icon, Layout, Menu, Modal } from "antd";
+import { Icon, Layout, Menu, Modal, Tag } from "antd";
 import firebase from "../../firebase";
 import { logout, setLogInUser } from "../../actions/authen";
 import { noti } from "../../helper";
@@ -134,6 +134,19 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
     );
   };
 
+  const getUserInfomation = () => {
+    const { type, firstname, lastname } = currentUser;
+    if (!type) return "...";
+    return (
+      <>
+        <Tag color={type === "doctor" ? "#87d068" : "#f50"}>
+          {type.toUpperCase()}
+        </Tag>
+        {`${firstname} ${lastname}`}
+      </>
+    );
+  };
+
   if (isEmpty(currentUser.uid)) return <LoadingPage />;
 
   return (
@@ -166,7 +179,7 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
       <Layout>
         <Header style={{ background: "#1890ff", padding: 0 }}>
           <h3 style={{ paddingLeft: "2rem", color: "white" }}>
-            {content.toUpperCase()}
+            {getUserInfomation()}
           </h3>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>

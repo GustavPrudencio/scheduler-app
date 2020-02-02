@@ -34,7 +34,7 @@ const Appointment = ({ appointmentList, user, userList, onSubmit }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [state, setState] = useState({
     doctor: "",
-    date: moment(),
+    date: moment().add(1, "days"),
     time: ""
   });
 

@@ -33,7 +33,7 @@ const Scheduler = ({
   onAppointmentDelete
 }) => {
   const [modalDetail, setModalDetail] = useState(false);
-  const [filterDate, setFilterDate] = useState("");
+  const [filterDate, setFilterDate] = useState(undefined);
   const [appointmentDetailView, setAppointmentDetailView] = useState(false);
   const { width } = useWindowDimensions();
 

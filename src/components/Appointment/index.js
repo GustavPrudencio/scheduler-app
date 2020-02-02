@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { DatePicker, Select, Divider, Row, Col, Modal, Button } from "antd";
+import { DatePicker, Select, Divider, Modal, Button } from "antd";
 import moment from "moment";
 import { appointmentTimes } from "../../helper";
 import SelectDoctor from "../SelectDoctor";

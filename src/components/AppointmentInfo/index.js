@@ -1,47 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col } from "antd";
+import { Descriptions } from "antd";
 import moment from "moment";
 import { getFullName, appointmentTimeToString } from "../../helper";
 
 const AppointmentInfo = ({ doctor, patient, date, time }) => {
   return (
-    <>
-      <Row>
-        <Col>
-          <div className="detail-doctor">
-            <p>
-              <b>Patient name:</b>
-              {getFullName(patient)}
-            </p>
-          </div>
-        </Col>
-        <Col>
-          <div className="detail-doctor">
-            <p>
-              <b>Doctor name: </b>
-              {getFullName(doctor)}
-            </p>
-          </div>
-        </Col>
-        <Col>
-          <div className="detail-doctor">
-            <p>
-              <b>Date: </b>
-              {` ${moment(date).format("DD MMM YYYY")}`}
-            </p>
-          </div>
-        </Col>
-        <Col>
-          <div className="detail-doctor">
-            <p>
-              <b>Time:</b>
-              {` ${time !== "" ? appointmentTimeToString(time) : ""}`}
-            </p>
-          </div>
-        </Col>
-      </Row>
-    </>
+    <Descriptions bordered size="small">
+      <Descriptions.Item label="Date" span={3}>
+        {moment(date).format("DD MMM YYYY")}
+      </Descriptions.Item>
+      <Descriptions.Item label="Time" span={3}>
+        {time !== "" ? appointmentTimeToString(time) : ""}
+      </Descriptions.Item>
+      <Descriptions.Item label="Doctor's Name" span={3}>
+        {getFullName(doctor)}
+      </Descriptions.Item>
+      <Descriptions.Item label="Patient's Name" span={3}>
+        {getFullName(patient)}
+      </Descriptions.Item>
+    </Descriptions>
   );
 };
 

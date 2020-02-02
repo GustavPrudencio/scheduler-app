@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import { Table, DatePicker, Divider, Modal, Icon, Popconfirm } from "antd";
+import {
+  Table,
+  DatePicker,
+  Divider,
+  Modal,
+  Icon,
+  Popconfirm,
+  Drawer,
+  Button
+} from "antd";
 import "./style.scss";
 import moment from "moment";
 import pick from "lodash/pick";
@@ -25,15 +34,15 @@ const Scheduler = ({
 }) => {
   const [modalDetail, setModalDetail] = useState(false);
   const [filterDate, setFilterDate] = useState("");
+  const [appointmentDetailView, setAppointmentDetailView] = useState(false);
   const { width } = useWindowDimensions();
 
   const columns = [
     {
-      width: "35%",
       title: "Date",
       dataIndex: "date",
       key: "date",
-      render: (value) => moment(value).format("DD MMMM YYYY"),
+      render: (value) => moment(value).format("DD MMM YYYY"),
       sorter: (a, b) => new Date(a.date) - new Date(b.date)
     },
     {
@@ -45,47 +54,24 @@ const Scheduler = ({
       sorter: (a, b) => parseFloat(a.time) - parseFloat(b.time)
     },
     {
-      width: "35%",
       title: "Doctor Name",
       dataIndex: "doctor",
       key: "doctor",
       render: (value) => getFullName(value)
     },
     {
-      fixed: "right",
-      width: 90,
-      title: "Action",
+      align: "center",
+      width: "10%",
+      title: "",
       dataIndex: "key",
       key: "key",
       render: (value, record) => (
         <div className="action-td">
           <Icon
             style={{ fontSize: 16, color: "#08c" }}
-            type="eye-o"
-            onClick={() =>
-              Modal.info({
-                title: "Appointment Info",
-                content: (
-                  <AppointmentInfo
-                    doctor={record.doctor}
-                    patient={record.patient}
-                    date={record.date}
-                    time={record.time}
-                  />
-                )
-              })
-            }
+            type="more"
+            onClick={() => setAppointmentDetailView(record)}
           />
-          <Divider type="vertical" />
-          <Popconfirm
-            title="Are you sure delete this task?"
-            onConfirm={() => onAppointmentDelete(value)}
-            onCancel={null}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Icon style={{ fontSize: 16, color: "#f04134" }} type="delete" />
-          </Popconfirm>
         </div>
       )
     }
@@ -119,7 +105,7 @@ const Scheduler = ({
         if (err) noti.error({ description: err.message });
         else {
           noti.success({
-            description: "Appoiment was added into your schedule"
+            description: "Appointment was added into your schedule"
           });
         }
       });
@@ -167,6 +153,37 @@ const Scheduler = ({
       >
         detail
       </Modal>
+      <Drawer
+        width="30vw"
+        height="60vh"
+        title="Appointment Detail"
+        placement={width > 600 ? "right" : "bottom"}
+        closable={false}
+        onClose={() => setAppointmentDetailView(false)}
+        visible={appointmentDetailView}
+      >
+        <AppointmentInfo
+          doctor={appointmentDetailView.doctor}
+          patient={appointmentDetailView.patient}
+          date={appointmentDetailView.date}
+          time={appointmentDetailView.time}
+        />
+        <Divider />
+        <div style={{ textAlign: "center" }}>
+          <Popconfirm
+            icon={<Icon type="delete" />}
+            title="Are you sure delete this appointment?"
+            onConfirm={() => onAppointmentDelete(appointmentDetailView.key)}
+            onCancel={null}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button icon="delete" type="danger">
+              Remove This Appointment
+            </Button>
+          </Popconfirm>
+        </div>
+      </Drawer>
     </div>
   );
 };

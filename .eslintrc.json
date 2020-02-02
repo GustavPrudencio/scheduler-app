@@ -21,6 +21,10 @@
         "exports": "never",
         "functions": "never"
       }
-    ]
+    ],
+    "max-len": "off",
+    "implicit-arrow-linebreak": "off",
+    "nonblock-statement-body-position": "off",
+    "react/jsx-curly-newline": "off"
   }
 }

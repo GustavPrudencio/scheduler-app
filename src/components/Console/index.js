@@ -11,7 +11,7 @@ import Scheduler from "../Scheduler";
 import "./style.scss";
 import appLogo from "../../static/img/app-logo.png";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const mapStateToProps = (state) => {
   return {
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Console = ({ actions, currentUser, userList, appointmentList }) => {
+const Console = ({ currentUser, userList, appointmentList }) => {
   const [content, setContent] = useState("scheduler");
 
   /**
@@ -72,6 +72,20 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
   };
 
   /**
+   * Delete Appointment child by appointment's key
+   * @param {String} key Appointment's key
+   */
+  const handleonDeleteAppointmentByKey = (key) => {
+    firebase
+      .database()
+      .ref(`appointments/${key}`)
+      .set(null, (err) => {
+        if (err) noti.error({ description: err.message });
+        else noti.success({ message: "Deleted" });
+      });
+  };
+
+  /**
    * handle on menu click
    * @param {Object} param[key] in ['1','2','3']
    */
@@ -92,13 +106,15 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
   };
 
   const renderContent = () => {
-    if (content === "account")
+    if (content === "account") {
       return <Account user={currentUser} onSubmit={onEditAccount} />;
+    }
     return (
       <Scheduler
         user={currentUser}
         userList={userList}
         appointmentList={appointmentList}
+        onAppointmentDelete={handleonDeleteAppointmentByKey}
       />
     );
   };
@@ -108,6 +124,7 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
       <Sider breakpoint="lg" collapsedWidth="0">
         <div className="logo">
           <img src={appLogo} alt="app-logo" />
+          <p>Doctor Scheduler App</p>
         </div>
         <Menu
           theme="dark"
@@ -138,9 +155,6 @@ const Console = ({ actions, currentUser, userList, appointmentList }) => {
             {renderContent()}
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Doctor Scheduler App ©2018
-        </Footer>
       </Layout>
     </Layout>
   );

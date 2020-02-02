@@ -1,8 +1,11 @@
 .scheduler {
   min-height: 75vh;
+  max-width: 1280px;
+  margin: 0 auto;
   .filter {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     padding: 16px;
     margin-bottom: 16px;
     border-radius: 6px;
@@ -19,4 +22,8 @@
       margin-right: 16px;
     }
   }
+}
+
+.action-td {
+  height: 24px;
 }

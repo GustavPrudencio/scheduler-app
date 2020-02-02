@@ -18,3 +18,15 @@ label {
 .ant-row {
   margin-bottom: 6px;
 }
+
+.grid {
+  display: flex;
+  margin: 16px;
+  flex-direction: column;
+  .row {
+    margin: 0;
+    .col {
+      margin: 6px;
+    }
+  }
+}

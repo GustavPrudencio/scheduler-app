@@ -83,49 +83,54 @@ const Appointment = ({ appointmentList, user, userList, onSubmit }) => {
         onCancel={onCloseModal}
         okText="Add"
       >
-        <Row>
-          <Col>
-            <label htmlFor="select-doctor">Doctor</label>
-            <SelectDoctor
-              className={`${error.doctor ? "error" : ""}`}
-              id="select-doctor"
-              users={userList}
-              value={state.doctor}
-              onChange={(value) => onChange("doctor", value)}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <label htmlFor="date-picker">Date</label>
-            <DatePicker
-              className={`${error.doctor ? "error" : ""}`}
-              id="date-picker"
-              value={moment(state.date)}
-              onChange={(value) => onChange("date", value)}
-              format="DD MMM YYYY"
-            />
-            <label htmlFor="time-picker">Time</label>
-            <Select
-              className={`select ${error.doctor ? "error" : ""}`}
-              id="time-picker"
-              value={state.time}
-              onChange={(value) => onChange("time", value)}
-            >
-              {appointmentTimes.map((apt, index) => {
-                return (
-                  <Option
-                    disabled={disabledList.includes(index)}
-                    key={apt}
-                    value={index}
-                  >
-                    {apt}
-                  </Option>
-                );
-              })}
-            </Select>
-          </Col>
-        </Row>
+        <div className="grid">
+          <div className="row">
+            <div className="col">
+              <label htmlFor="select-doctor">Doctor</label>
+              <SelectDoctor
+                className={`${error.doctor ? "error" : ""}`}
+                id="select-doctor"
+                users={userList}
+                value={state.doctor}
+                onChange={(value) => onChange("doctor", value)}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <label htmlFor="date-picker">Date</label>
+              <DatePicker
+                className={`${error.doctor ? "error" : ""}`}
+                id="date-picker"
+                value={moment(state.date)}
+                onChange={(value) => onChange("date", value)}
+                format="DD MMM YYYY"
+                disabledDate={(current) => current.valueOf() < Date.now()}
+              />
+            </div>
+            <div className="col">
+              <label htmlFor="time-picker">Time</label>
+              <Select
+                className={`select ${error.doctor ? "error" : ""}`}
+                id="time-picker"
+                value={state.time}
+                onChange={(value) => onChange("time", value)}
+              >
+                {appointmentTimes.map((apt, index) => {
+                  return (
+                    <Option
+                      disabled={disabledList.includes(index)}
+                      key={apt}
+                      value={index}
+                    >
+                      {apt}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </div>
+          </div>
+        </div>
         <Divider />
         <AppointmentInfo
           patient={user}

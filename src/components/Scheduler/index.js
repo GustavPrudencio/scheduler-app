@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import { Table, DatePicker, Switch, Divider, Modal } from "antd";
+import { Table, DatePicker, Divider, Modal, Icon, Popconfirm } from "antd";
 import "./style.scss";
 import moment from "moment";
 import pick from "lodash/pick";
@@ -14,20 +14,30 @@ import {
 } from "../../helper";
 import firebase from "../../firebase";
 import Appointment from "../Appointment";
+import AppointmentInfo from "../AppointmentInfo";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
-const Scheduler = ({ user, userList, appointmentList }) => {
+const Scheduler = ({
+  user,
+  userList,
+  appointmentList,
+  onAppointmentDelete
+}) => {
   const [modalDetail, setModalDetail] = useState(false);
-  const [filterDate, setFilterDate] = useState(moment());
-  const [isFilter, setIsFilter] = useState(false);
+  const [filterDate, setFilterDate] = useState("");
+  const { width } = useWindowDimensions();
 
   const columns = [
     {
+      width: "35%",
       title: "Date",
       dataIndex: "date",
       key: "date",
-      render: (value) => moment(value).format("DD MMMM YYYY")
+      render: (value) => moment(value).format("DD MMMM YYYY"),
+      sorter: (a, b) => new Date(a.date) - new Date(b.date)
     },
     {
+      width: "30%",
       title: "Time",
       dataIndex: "time",
       key: "time",
@@ -35,18 +45,56 @@ const Scheduler = ({ user, userList, appointmentList }) => {
       sorter: (a, b) => parseFloat(a.time) - parseFloat(b.time)
     },
     {
+      width: "35%",
       title: "Doctor Name",
       dataIndex: "doctor",
       key: "doctor",
       render: (value) => getFullName(value)
     },
     {
-      title: "Patient Name",
-      dataIndex: "patient",
-      key: "patient",
-      render: (value) => getFullName(value)
+      fixed: "right",
+      width: 90,
+      title: "Action",
+      dataIndex: "key",
+      key: "key",
+      render: (value, record) => (
+        <div className="action-td">
+          <Icon
+            style={{ fontSize: 16, color: "#08c" }}
+            type="eye-o"
+            onClick={() =>
+              Modal.info({
+                title: "Appointment Info",
+                content: (
+                  <AppointmentInfo
+                    doctor={record.doctor}
+                    patient={record.patient}
+                    date={record.date}
+                    time={record.time}
+                  />
+                )
+              })
+            }
+          />
+          <Divider type="vertical" />
+          <Popconfirm
+            title="Are you sure delete this task?"
+            onConfirm={() => onAppointmentDelete(value)}
+            onCancel={null}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Icon style={{ fontSize: 16, color: "#f04134" }} type="delete" />
+          </Popconfirm>
+        </div>
+      )
     }
   ];
+
+  const getColumns = () => {
+    if (width > 600) return columns;
+    return [columns[0], columns[1], columns[3]];
+  };
 
   const onAddAppointmentAdd = (appointmentInfo) => {
     const { doctor, date, time } = pick(appointmentInfo, [
@@ -79,7 +127,7 @@ const Scheduler = ({ user, userList, appointmentList }) => {
 
   const filter = (source) => {
     return source.filter(({ date, patient }) => {
-      if (!filterDate || !isFilter) return patient.uid === user.uid;
+      if (!filterDate) return patient.uid === user.uid;
       return moment(filterDate).isSame(date, "day") && patient.uid === user.uid;
     });
   };
@@ -87,45 +135,27 @@ const Scheduler = ({ user, userList, appointmentList }) => {
   return (
     <div className="scheduler">
       <div className="filter">
+        <div>
+          <span>Filter by date</span>
+          <DatePicker
+            format="DD MMMM YYYY"
+            value={filterDate}
+            onChange={(value) => setFilterDate(value)}
+          />
+        </div>
+      </div>
+      <div style={{ marginBottom: "6px" }}>
         <Appointment
           onSubmit={onAddAppointmentAdd}
           user={user}
           userList={userList}
           appointmentList={appointmentList}
         />
-        <Divider type="vertical" />
-        <Switch
-          size="small"
-          className="switch"
-          checked={isFilter}
-          onChange={(value) => setIsFilter(value)}
-        />
-        <span>Filter by date</span>
-        <DatePicker
-          format="DD MMMM YYYY"
-          disabled={!isFilter}
-          value={filterDate}
-          onChange={(value) => setFilterDate(value)}
-        />
       </div>
       <Table
-        onRow={(record) => {
-          return {
-            onClick: () =>
-              Modal.info({
-                title: "Appointment Info",
-                content: (
-                  <div>
-                    <p>{record.key}</p>
-                    <p>some messages...some messages...</p>
-                  </div>
-                ),
-                onOk() {}
-              })
-          };
-        }}
+        size="middle"
         rowKey="key"
-        columns={columns}
+        columns={getColumns()}
         dataSource={filter(appointmentList)}
       />
       <Modal
@@ -151,7 +181,8 @@ Scheduler.propTypes = {
     type: PropTypes.string.isRequired
   }).isRequired,
   userList: PropTypes.array.isRequired,
-  appointmentList: PropTypes.array.isRequired
+  appointmentList: PropTypes.array.isRequired,
+  onAppointmentDelete: PropTypes.func.isRequired
 };
 
 export default Scheduler;

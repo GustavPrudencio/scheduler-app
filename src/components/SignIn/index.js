@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Divider, Input, Button, Row, Col } from "antd";
 import "./style.scss";
 
-const SignIn = ({ onSignIn, onSignUp }) => {
+const SignIn = ({ onSignIn, onSignUp, onResetPassword }) => {
   const [state, setState] = useState({
     email: "",
     password: ""
@@ -35,7 +35,7 @@ const SignIn = ({ onSignIn, onSignUp }) => {
       />
       <Row>
         <Col span={12}>
-          <Button type="link" onClick={handleOnSignIn}>
+          <Button type="link" onClick={onResetPassword}>
             Forget password ?
           </Button>
         </Col>
@@ -58,7 +58,8 @@ const SignIn = ({ onSignIn, onSignUp }) => {
 
 SignIn.propTypes = {
   onSignIn: PropTypes.func.isRequired,
-  onSignUp: PropTypes.func.isRequired
+  onSignUp: PropTypes.func.isRequired,
+  onResetPassword: PropTypes.func.isRequired
 };
 
 export default SignIn;

@@ -4,6 +4,7 @@ import firebase from "../../firebase";
 import { noti } from "../../helper";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
+import ResetPassword from "../ResetPassword";
 import "./style.scss";
 import logo from "../../static/img/medical-logo-2.jpg";
 
@@ -63,14 +64,40 @@ const Authen = () => {
       });
   };
 
+  const onResetPassword = (email) => {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        noti.success({ description: `Reset password link sent to ${email}` });
+        setView("signin");
+      })
+      .catch((err) => {
+        const { message } = err;
+        noti.error({ description: message });
+      });
+  };
+
   const render = () => {
     if (view === "signin") {
       return (
-        <SignIn onSignIn={handleOnSignIn} onSignUp={() => setView("signup")} />
+        <SignIn
+          onSignIn={handleOnSignIn}
+          onSignUp={() => setView("signup")}
+          onResetPassword={() => setView("reset-password")}
+        />
+      );
+    }
+    if (view === "signup") {
+      return (
+        <SignUp onSignIn={() => setView("signin")} onSignUp={handleOnSignUp} />
       );
     }
     return (
-      <SignUp onSignIn={() => setView("signin")} onSignUp={handleOnSignUp} />
+      <ResetPassword
+        onSubmit={onResetPassword}
+        onSignIn={() => setView("signin")}
+      />
     );
   };
 

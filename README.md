@@ -1,5 +1,5 @@
 # Scheduler App
-React Scheduler App with Firebase realtime database and Firebase Authentication.
+Example React Scheduler App with Firebase realtime database and Firebase Authentication.
 
 ## Online Demo
 [Demo Firebase](https://thyahan-doctor-scheduler.firebaseapp.com)
